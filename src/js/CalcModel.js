@@ -22,7 +22,26 @@ const CalcModel = class extends Observable {
     KEY_TYPE[buttonType](buttonText);
   }
   handleBasicCalc(calcFactor) {
-    console.log("calcFactor", calcFactor);
+    this.updateCalcStack(calcFactor);
+  }
+  hasCalcStack() {
+    return this.calcStack.length !== 0;
+  }
+  updateCalcStack(calcFactor) {
+    if (this.hasCalcStack()) {
+      this.calcStack.pop();
+      this.calcStack.push(calcFactor);
+    } else this.calcStack.push(calcFactor);
+    console.log("calcStack", this.calcStack);
+  }
+  handleDivideCalc() {
+    this.updateCalcStack(calcFactor);
+  }
+  handleMultipleCalc() {
+    this.updateCalcStack(calcFactor);
+  }
+  handlePlusCalc(calcFactor) {
+    this.updateCalcStack(calcFactor);
   }
   handleFnCalc(calcFactor) {
     const FACTOR_TYPE = {

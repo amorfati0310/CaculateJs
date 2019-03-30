@@ -9,7 +9,10 @@ const FnCalcKeys = ["AC", "+/-", "%"];
 
 const buttonTemplate = (type, btnText) => `
 <li>
-    <button class="btn-${type}">${btnText}</button>
+    <button 
+    class="btn-${type}"
+    data-type="${type}"
+    >${btnText}</button>
 </li>
 `;
 const fnCalcKeyTemplate = curry(buttonTemplate)("fn-calc");
@@ -18,8 +21,8 @@ const numKeyTemplate = curry(buttonTemplate)("num-key");
 
 const numKeysTemplate = reduce((acc, val) => (acc += numKeyTemplate(val)), "", NumKeys);
 
-const basicCalcKeysTemplate = reduce((acc, val) => (acc += numKeyTemplate(val)), "", BasicCalcKeys);
+const basicCalcKeysTemplate = reduce((acc, val) => (acc += basicCalcKeyTemplate(val)), "", BasicCalcKeys);
 
-const fnCalcKeysTemplate = reduce((acc, val) => (acc += numKeyTemplate(val)), "", FnCalcKeys);
+const fnCalcKeysTemplate = reduce((acc, val) => (acc += fnCalcKeyTemplate(val)), "", FnCalcKeys);
 
 export { numKeysTemplate, basicCalcKeysTemplate, fnCalcKeysTemplate };

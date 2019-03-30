@@ -8,8 +8,13 @@ const Keys = class {
     this.render();
     this.el.addEventListener("click", e => {
       const targetButton = e.target.closest("button");
+      if (!targetButton) return;
       const buttonText = targetButton.innerText;
-      this.controller.sendInputKey(buttonText);
+      const buttonType = targetButton.dataset.type;
+      this.controller.sendInputKey({
+        buttonType,
+        buttonText
+      });
     });
   }
   render() {

@@ -6,8 +6,8 @@ const Display = class {
   init() {
     this.controller.subscribe(this.render.bind(this));
   }
-  render({ caclResult }) {
-    this.el.innerText = caclResult;
+  render({ calcResult }) {
+    this.el.innerText = calcResult;
   }
 };
 

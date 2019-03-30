@@ -10,17 +10,20 @@ const calcController = new CalcController({ model: calcModel });
 
 const numKeys = new Keys({
   el: ".number-keys",
-  template: numKeysTemplate
+  template: numKeysTemplate,
+  controller: calcController
 });
 
 const basicCalcKeys = new Keys({
   el: ".calc-keys",
-  template: basicCalcKeysTemplate
+  template: basicCalcKeysTemplate,
+  controller: calcController
 });
 
 const fnKeys = new Keys({
   el: ".fn-keys",
-  template: fnCalcKeysTemplate
+  template: fnCalcKeysTemplate,
+  controller: calcController
 });
 
 const caclDisplay = new Display({

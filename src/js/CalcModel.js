@@ -10,6 +10,9 @@ const CalcModel = class extends Observable {
     this.fire({ caclResult: this.caclResult });
     console.log("init Model");
   }
+  sendInputKey(inputKey) {
+    console.log("inputKey", inputKey);
+  }
 };
 
 export default CalcModel;

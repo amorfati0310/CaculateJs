@@ -7,7 +7,9 @@ const CalcController = class extends Observable {
   init() {
     this.model.subscribe(this.fire.bind(this));
   }
-  updateResult() {}
+  inpuyKey(inpuyKey) {
+    this.model.sendInputKey(inpuyKey);
+  }
 };
 
 export default CalcController;

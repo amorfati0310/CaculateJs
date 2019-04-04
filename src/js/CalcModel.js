@@ -25,6 +25,9 @@ const CalcModel = class extends Observable {
     KEY_TYPE[buttonType](buttonText);
   }
   handleBasicCalc(calcFactor) {
+    console.log("handle basic", calcFactor);
+    if (!this.hasNumStack()) return;
+
     this.updateOperatorStack(calcFactor);
   }
   hasOperatorStack() {
@@ -40,11 +43,24 @@ const CalcModel = class extends Observable {
   handleFnCalc(calcFactor) {
     const FACTOR_TYPE = {
       AC: () => this.handleAllClear(),
+      C: () => this.handleClear(),
       "+/-": () => this.handlePlusMinus(),
       "%": () => this.handlePercent()
     };
     FACTOR_TYPE[calcFactor]();
     console.log("calcFactor", calcFactor);
+  }
+  handleClear() {
+    this.setClearValue();
+    this.updateView();
+  }
+  setClearValue() {
+    this.isBegin = true;
+    this.calcResult = 0;
+  }
+  updateView() {
+    this.fire({ isBegin: this.isBegin });
+    this.updateResult({ calcResult: this.calcResult });
   }
   updateResult() {
     this.fire({ calcResult: this.calcResult });
@@ -86,7 +102,16 @@ const CalcModel = class extends Observable {
     };
     return operatorType[operator](lastNum, num);
   }
+  setBeginState(state) {
+    this.isBegin = state;
+  }
   handleNumCalc(num) {
+    // num Stack 이 없다면 시작을 안 한 상태
+    if (!this.hasNumStack()) {
+      this.setBeginState(false);
+      this.fire({ isBegin: this.isBegin });
+    }
+
     console.log("calcFactor", num);
     if (this.hasOperatorStack()) {
       // 계산을 위해 저장한다.

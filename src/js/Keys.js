@@ -15,7 +15,14 @@ const Keys = class {
         buttonType,
         buttonText
       });
+      this.controller.subscribe(this.updateClearText.bind(this));
     });
+  }
+  updateClearText({ isBegin }) {
+    console.log("isBegin", isBegin);
+    const buttonText = isBegin ? "AC" : "C";
+    const buttonEl = document.querySelector(".btn-fn-calc");
+    buttonEl.innerText = buttonText;
   }
   render() {
     this.el.innerHTML = this.template;

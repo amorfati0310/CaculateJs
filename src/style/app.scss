@@ -1,9 +1,16 @@
 @import "./common.scss";
 
 
+.caculator {
+  background-color: #666;
+  width: 320px;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
 .caculator__disaplaybox {
   background: #eee;
-    width: 300px;
+    width: 320px;
     height: 50px;
     border-radius: 5px;
     display: flex;
@@ -12,12 +19,19 @@
     padding: 15px;
     box-sizing: border-box;
 };
+.keys {
+  position: relative;
+}
 .number-keys {
-  width: 300px;
+  width: 240px;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
   li {
-    width: 33.33%;
+    width: 80px;
+  }
+  li:last-child {
+    width: 160px;
   }
   .btn-num-key {
     background: #dee2e6;
@@ -31,11 +45,15 @@
   }
 }
 .calc-keys {
-  width: 300px;
+  width: 80px;
   display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex-direction: column;
   flex-wrap: wrap;
   li {
-    width: 33.33%;
+    width: 80px;
   }
   .btn-basic-calc {
     background: #fab005;
@@ -55,8 +73,9 @@
   display: flex;
   flex-wrap: wrap;
   li {
-    width: 33.33%;
+    width: 80px;
   }
+
   .btn-fn-calc {
     background: #868e96;
     color: #fff;

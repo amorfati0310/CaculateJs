@@ -1,12 +1,15 @@
 import Observable from "./Observable.js";
 //import Calculator from "./Calculator.js";
+import { DMath } from "./fpUtils";
 
 const CalcModel = class extends Observable {
   constructor() {
     super();
     this.isBegin = true;
-    this.calcStack = [];
+    this.operatorStack = [];
     this.calcResult = 0;
+    this.numStack = [];
+    this.calcStack = [];
   }
   init() {
     this.fire({ calcResult: this.calcResult });
@@ -22,26 +25,17 @@ const CalcModel = class extends Observable {
     KEY_TYPE[buttonType](buttonText);
   }
   handleBasicCalc(calcFactor) {
-    this.updateCalcStack(calcFactor);
+    this.updateOperatorStack(calcFactor);
   }
-  hasCalcStack() {
-    return this.calcStack.length !== 0;
+  hasOperatorStack() {
+    return this.operatorStack.length !== 0;
   }
-  updateCalcStack(calcFactor) {
-    if (this.hasCalcStack()) {
-      this.calcStack.pop();
-      this.calcStack.push(calcFactor);
-    } else this.calcStack.push(calcFactor);
-    console.log("calcStack", this.calcStack);
-  }
-  handleDivideCalc() {
-    this.updateCalcStack(calcFactor);
-  }
-  handleMultipleCalc() {
-    this.updateCalcStack(calcFactor);
-  }
-  handlePlusCalc(calcFactor) {
-    this.updateCalcStack(calcFactor);
+  updateOperatorStack(calcFactor) {
+    if (this.hasOperatorStack()) {
+      this.operatorStack.pop();
+      this.operatorStack.push(calcFactor);
+    } else this.operatorStack.push(calcFactor);
+    console.log("operatorStack", this.operatorStack);
   }
   handleFnCalc(calcFactor) {
     const FACTOR_TYPE = {
@@ -58,6 +52,9 @@ const CalcModel = class extends Observable {
   handleAllClear() {
     this.isBegin = true;
     this.calcResult = 0;
+    this.operatorStack = [];
+    this.numStack = [];
+    this.calcStack = [];
     this.updateResult();
     console.log("init Model");
   }
@@ -72,9 +69,36 @@ const CalcModel = class extends Observable {
     this.calcResult = parseFloat(this.calcResult * -1);
     this.updateResult();
   }
-  handleNumCalc(calcFactor) {
-    console.log("calcFactor", calcFactor);
-    this.calcResult = parseFloat(`${this.calcResult}${calcFactor}`);
+  hasNumStack() {
+    return this.numStack.length !== 0;
+  }
+  isNeedCalc() {
+    return this.hasNumStack() && this.hasNumStack();
+  }
+  doCalc(num) {
+    const lastNum = this.numStack.pop();
+    const operator = this.operatorStack[this.operatorStack.length - 1];
+    const operatorType = {
+      "+": DMath.add,
+      "-": DMath.substract,
+      "÷": DMath.multiple,
+      "×": DMath.divide
+    };
+    return operatorType[operator](lastNum, num);
+  }
+  handleNumCalc(num) {
+    console.log("calcFactor", num);
+    if (this.hasOperatorStack()) {
+      // 계산을 위해 저장한다.
+      this.numStack.push(this.calcResult);
+    }
+    if (this.isNeedCalc()) {
+      const result = this.doCalc(num);
+      this.calcStack.push(result);
+      this.calcResult = parseFloat(num);
+    } else {
+      this.calcResult = parseFloat(`${this.calcResult}${num}`);
+    }
     this.updateResult();
   }
 };

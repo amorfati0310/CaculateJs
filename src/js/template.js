@@ -1,6 +1,10 @@
 import { reduce, curry } from "./fpUtils";
-
-const NumKeys = [...new Array(10).keys()];
+// 0 ~ 9
+const nums = [...new Array(10).keys()]
+  .reverse()
+  .slice(0, 9)
+  .concat([".", "0"]);
+const NumKeys = nums;
 const BasicCalcKeys = ["÷", "×", "−", "+", "="];
 const FnCalcKeys = ["AC", "+/-", "%"];
 // 1. fnKey -> 적절한 modeKey 생각이 안난다 ... -> 더 좋은 거 있으면 교체
